@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
  */
-package com.mycompany.dvdlibrary;
+package com.sal.dvdlibrary;
 
 /**
  * Allow the user to add a DVD to the collection Allow the user to remove a DVD
@@ -26,34 +26,22 @@ package com.mycompany.dvdlibrary;
  *
  * @author katyb
  */
-import java.util.Scanner;
+import com.sal.dvdlibrary.controller.DvdLibraryController;
+import com.sal.dvdlibrary.dao.DvdLibraryDaoFileImpl;
+import com.sal.dvdlibrary.dao.dvdLibraryDao;
+import com.sal.dvdlibrary.ui.DvdLibraryView;
+import com.sal.dvdlibrary.ui.UserIO;
+import com.sal.dvdlibrary.ui.UserIOConsoleImpl;
 
 public class App {
-
     public static void main(String[] args) {
-        int numChoice = mainMenu();
-        System.out.println("Choice: " + numChoice);
+        UserIO myIo = new UserIOConsoleImpl();
+        DvdLibraryView myView = new DvdLibraryView(myIo);
 
-    }
+        dvdLibraryDao myDao = new DvdLibraryDaoFileImpl();
+        DvdLibraryController controller = new  DvdLibraryController(myDao, myView);
 
-    public static int mainMenu() {
-        //Create a menu for the user:
-        System.out.println("DVD Libray");
-        System.out.println("");
-        System.out.println("Main Menu");
-        System.out.println("1 - List Collection");
-        System.out.println("2 - List one Title");
-        System.out.println("3 - Add DVD");
-        System.out.println("4 - Delete DVD");
-        System.out.println("5 - Edit DVD");
-        System.out.println("6 - Search Library");
-        System.out.println("7 - Exit\n\n");
-        System.out.println("Please choose an option: ");
-
-        Scanner userChoice = new Scanner(System.in);
-        int numChoice = userChoice.nextInt();
-
-        return numChoice;
-
+        //ClassRosterController controller = new ClassRosterController();
+        controller.run();
     }
 }
