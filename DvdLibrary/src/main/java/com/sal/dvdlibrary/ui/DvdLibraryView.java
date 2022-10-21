@@ -32,14 +32,14 @@ public class DvdLibraryView {
     }
 
     public int printEditMenuAndGetSelection() {
-        io.print("1. Please enter Dvd Title");
-        io.print("2. Please enter the director's name.");
-        io.print("3. Please enter release date.");
-        io.print("4. Pleae enter MPAA");
-        io.print("5. Pleae enter Studio name");
-        io.print("6. Please enter a rating. For example: Good, great, sucked");
+        io.print("1. Please enter the director's name.");
+        io.print("2. Please enter release date.");
+        io.print("3. Pleae enter MPAA");
+        io.print("4. Pleae enter Studio name");
+        io.print("5. Please enter a rating. For example: Good, great, sucked");
+        io.print("6. Return to Main Menu");
 
-        return io.readInt("Please select from the above choices.", 1, 5);
+        return io.readInt("Please select from the above choices.", 1, 6);
 
     }
 
@@ -53,11 +53,14 @@ public class DvdLibraryView {
         String ReleaseDate = io.readString("Please enter release date.");
         String MPAA = io.readString("Pleae enter MPAA");
         String Studio = io.readString("Pleae enter Studio name");
+        String UserRating = io.readString("One word rating: Excellent, Good, Fair, Sucks");
         Dvd currentDvd = new Dvd(title);
         currentDvd.setDirectorsName(DirectorsName);
         currentDvd.setReleaseDate(ReleaseDate);
         currentDvd.setMPAA(MPAA);
+        
         currentDvd.setStudio(Studio);
+        currentDvd.setUserRating(UserRating);
         return currentDvd;
     }
 
@@ -83,7 +86,7 @@ public class DvdLibraryView {
      */
     public void displayDvdList(List<Dvd> dvdList) {
         for (Dvd currentDvd : dvdList) {
-            String dvdInfo = String.format("#%s : %s %s",
+            String dvdInfo = String.format("#%s : %s %s %s %s %s",
                     currentDvd.getTitle(),
                     currentDvd.getDirectorsName(),
                     currentDvd.getReleaseDate(),

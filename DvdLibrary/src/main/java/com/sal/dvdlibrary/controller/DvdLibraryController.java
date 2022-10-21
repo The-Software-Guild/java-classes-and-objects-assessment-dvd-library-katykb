@@ -5,8 +5,6 @@
  */
 package com.sal.dvdlibrary.controller;
 
-
-
 import com.sal.dvdlibrary.dao.DvdLibraryDaoException;
 import com.sal.dvdlibrary.dao.dvdLibraryDao;
 import com.sal.dvdlibrary.dto.Dvd;
@@ -56,21 +54,23 @@ public class DvdLibraryController {
 
                     case 5:
                         editDvd();
-                        
+
                     case 6:
-                        //exitCommand();
+                        exitMessage();
                         break;
+
                     default:
                         unknownCommand();
 
                 }
 
             }
+            exitMessage();
 
         } catch (DvdLibraryDaoException e) {
             view.displayErrorMessage(e.getMessage());
         }
-        exitMessage();
+
     }
 
     private int getMenuSelection() {
@@ -135,22 +135,23 @@ public class DvdLibraryController {
             boolean keepGoing = true;
             while (keepGoing) {
                 editMenuSelection = view.printEditMenuAndGetSelection();
-                
+
                 switch (editMenuSelection) {
+
                     case 1:
-                        editReleaseDate(title);
-                        break;
-                    case 2:
-                        editMPAA(title);
-                        break;
-                    case 3:
                         editDirectorName(title);
                         break;
+                    case 2:
+                        editStudioName(title);
+                        break;
+                    case 3:
+                        editReleaseDate(title);
+                        break;
                     case 4:
-                        editUserRating(title);
+                        editMPAA(title);
                         break;
                     case 5:
-                        editStudioName(title);
+                        editUserRating(title);
                         break;
                     case 6:
                         keepGoing = false;
@@ -163,6 +164,13 @@ public class DvdLibraryController {
                 }
             }
         }
+    }
+
+    private void editDirectorName(String title) throws DvdLibraryDaoException {
+        view.displayEditDirectorNameBanner();
+        String newDirectorName = view.getNewDirectorName();
+        dao.editDirectorName(title, newDirectorName);
+        view.displayEditDvdSuccess();
     }
 
     private int getEditMenuSelection() {
@@ -180,13 +188,6 @@ public class DvdLibraryController {
         view.displayEditMpaaBanner();
         String newMpaaRating = view.getNewMpaaRating();
         dao.editMPAA(title, newMpaaRating);
-        view.displayEditDvdSuccess();
-    }
-
-    private void editDirectorName(String title) throws DvdLibraryDaoException {
-        view.displayEditDirectorNameBanner();
-        String newDirectorName = view.getNewDirectorName();
-        dao.editDirectorName(title, newDirectorName);
         view.displayEditDvdSuccess();
     }
 
