@@ -142,13 +142,13 @@ public class DvdLibraryController {
                         editDirectorName(title);
                         break;
                     case 2:
-                        editStudioName(title);
-                        break;
-                    case 3:
                         editReleaseDate(title);
                         break;
-                    case 4:
+                    case 3:
                         editMPAA(title);
+                        break;
+                    case 4:
+                        editStudioName(title);
                         break;
                     case 5:
                         editUserRating(title);

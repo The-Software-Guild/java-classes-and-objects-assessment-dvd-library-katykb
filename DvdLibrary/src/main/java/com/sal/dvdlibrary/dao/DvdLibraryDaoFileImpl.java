@@ -27,14 +27,13 @@ public class DvdLibraryDaoFileImpl implements dvdLibraryDao {
      */
     private Map<String, Dvd> dvds = new HashMap<>();
 
-    public DvdLibraryDaoFileImpl() { //no arg constructor typically used
-        //DVD_FILE = "dvdTest.txt";
-    }
-
-    public DvdLibraryDaoFileImpl(String libraryTextFile) {
-       // DVD_FILE = libraryTextFile;
-    }
-
+//    public DvdLibraryDaoFileImpl() { //no arg constructor typically used
+//        //DVD_FILE = "dvdTest.txt";
+//    }
+//
+//    public DvdLibraryDaoFileImpl(String libraryTextFile) {
+//       // DVD_FILE = libraryTextFile;
+//    }
     @Override
     public Dvd addDvd(String title, Dvd dvd)
             throws DvdLibraryDaoException {
@@ -80,11 +79,11 @@ public class DvdLibraryDaoFileImpl implements dvdLibraryDao {
         String[] dvdTokens = dvdAsText.split(DELIMITER);
         String title = dvdTokens[0];
         Dvd dvdFromFile = new Dvd(title);
-        dvdFromFile.setDirectorsName(dvdTokens[2]);
-        dvdFromFile.setReleaseDate(dvdTokens[3]);
-        dvdFromFile.setMPAA(dvdTokens[4]);
-        dvdFromFile.setStudio(dvdTokens[5]);
-        dvdFromFile.setUserRating(dvdTokens[6]);
+        dvdFromFile.setDirectorsName(dvdTokens[1]);
+        dvdFromFile.setReleaseDate(dvdTokens[2]);
+        dvdFromFile.setMPAA(dvdTokens[3]);
+        dvdFromFile.setStudio(dvdTokens[4]);
+        dvdFromFile.setUserRating(dvdTokens[5]);
 
         return dvdFromFile;
     }
@@ -98,7 +97,7 @@ public class DvdLibraryDaoFileImpl implements dvdLibraryDao {
         try {
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader("dvdTest.txt")));
+                            new FileReader(DVD_FILE)));
         } catch (FileNotFoundException e) {
             throw new DvdLibraryDaoException(
                     "-_- Could not load roster data into memory.", e);
@@ -110,8 +109,8 @@ public class DvdLibraryDaoFileImpl implements dvdLibraryDao {
             currentLine = scanner.nextLine();
             currentDvd = unmarshallDvd(currentLine);
             dvds.put(currentDvd.getTitle(), currentDvd);
-            scanner.close();
         }
+        scanner.close();
     }
 
     private String marshallDvd(Dvd aDvd) {
@@ -138,7 +137,7 @@ public class DvdLibraryDaoFileImpl implements dvdLibraryDao {
         // handle any errors that occur.
         PrintWriter out;
         try {
-            out = new PrintWriter(new FileWriter("dvdTest.txt"));
+            out = new PrintWriter(new FileWriter(DVD_FILE));
         } catch (IOException e) {
             throw new DvdLibraryDaoException(
                     "Could not save Dvd data");
@@ -153,9 +152,8 @@ public class DvdLibraryDaoFileImpl implements dvdLibraryDao {
         List<Dvd> dvdList = this.getAllDvds();
         for (Dvd currentDvd : dvdList) {
             dvdAsText = marshallDvd(currentDvd);
-            System.out.println(dvdAsText);
+            out.println(dvdAsText);
             out.flush();
-
         }
         out.close();
     }
